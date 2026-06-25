@@ -161,7 +161,7 @@ function App() {
                   Swap
                 </button>
               </div>
-              <CompareView setupA={setupA!.setup} setupB={setupB!.setup} />
+              <CompareView setupA={setupA!.setup} setupB={setupB!.setup} showAll={showAll} />
             </>
           )}
         </div>

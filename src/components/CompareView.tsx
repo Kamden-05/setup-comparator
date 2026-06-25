@@ -6,9 +6,10 @@ import SetupSummary from "./SetupSummary";
 type CompareViewProps = {
   setupA: Setup;
   setupB: Setup;
+  showAll: boolean;
 };
 
-export default function CompareView({ setupA, setupB }: CompareViewProps) {
+export default function CompareView({ setupA, setupB, showAll }: CompareViewProps) {
   let content;
 
   if (!setupA || !setupB) {
@@ -51,7 +52,7 @@ export default function CompareView({ setupA, setupB }: CompareViewProps) {
           {setupA.categories.map((aCat, index) => {
             const bCat = setupB.categories[index];
 
-            return <CopmareTable key={index} aCat={aCat} bCat={bCat} />;
+            return <CopmareTable key={index} aCat={aCat} bCat={bCat} showAll={showAll} />;
           })}
         </div>
       </div>
