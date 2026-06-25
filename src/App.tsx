@@ -53,10 +53,6 @@ function App() {
     setSetupB(null);
   }
 
-  function handleShowClick() {
-    setShowAll(!showAll);
-  }
-
   function handleSwapClick() {
     const tempSlot = setupA;
 
@@ -80,23 +76,36 @@ function App() {
               onClick={handleResetClick}
               className="
                 px-4 py-2 rounded-md
-                bg-orange-600 text-white font-medium
-                hover:bg-orange-700 active:bg-orange-800
+                bg-red-600 text-white font-medium
+                hover:bg-red-700 active:bg-redi-800
                 transition
               "
             >
-              Reset
+              Reupload
             </button>
             <button
-              onClick={handleShowClick}
-              className="
-                px-4 py-2 rounded-md
-                bg-green-600 text-white font-medium
-                hover:bg-green-700 active:bg-green-800
-                transition
-              "
+              onClick={() => setShowAll((prev) => !prev)}
+              className="relative flex items-center h-10 p-1 rounded-md bg-white/5 border border-theme w-55 overflow-hidden"
             >
-              Show All
+              {/* Slider */}
+              <div
+                className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-green-600 transition-transform duration-200
+                  ${showAll ? "translate-x-0" : "translate-x-full"}`}
+              />
+
+              {/* Labels */}
+              <div className="relative z-10 flex w-full text-sm font-medium">
+                <span
+                  className={`w-1/2 text-center ${showAll ? "text-white" : "text-muted"}`}
+                >
+                  All Rows
+                </span>
+                <span
+                  className={`w-1/2 text-center ${!showAll ? "text-white" : "text-muted"}`}
+                >
+                  Changes
+                </span>
+              </div>
             </button>
             <button
               onClick={handleSwapClick}
@@ -107,14 +116,14 @@ function App() {
                 transition
               "
             >
-              Swap
+              Swap Setups
             </button>
           </div>
         )}
       </div>
 
       {/*CONTENT*/}
-      <div className="flex-1 overflow-y-auto flex flex-col gap-10 items-center">
+      <div className="flex-1 overflow-y-auto flex flex-col gap-5 items-center">
         {view === "upload" ? (
           <>
             <div className="surface border border-theme rounded-lg p-6 flex gap-8 justify-center">
