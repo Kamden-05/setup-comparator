@@ -67,39 +67,81 @@ function App() {
   const error = validateSetups(setupA?.setup ?? null, setupB?.setup ?? null);
 
   return (
-    <div className="min-h-screen bg-bg text-primary flex flex-col">
-      <div className="max-w-6xl mx-auto w-full px-6 py-10 flex flex-col gap-10">
+    <div className="h-screen bg-bg text-primary flex flex-col">
+      {/*HEADER*/}
+      <div className="shrink-0 max-w-6xl mx-auto w-full px-6 py-10">
         <h1 className="text-heading text-center text-4xl font-semibold">
           iRacing Setup Comparison
         </h1>
-        <div className="flex flex-col gap-10 items-center">
-          {view === "upload" ? (
-            <>
-              <div className="surface border border-theme rounded-lg p-6 flex gap-8 justify-center">
-                <FileDropzone
-                  label="Setup A"
-                  file={setupA?.file ?? null}
-                  onFileSelected={handleSetupASelected}
-                  onRemove={() => setSetupA(null)}
-                />
-                <FileDropzone
-                  label="Setup B"
-                  file={setupB?.file ?? null}
-                  onFileSelected={handleSetupBSelected}
-                  onRemove={() => setSetupB(null)}
-                />
-              </div>
-              <div className="h-6 flex items-center justify-center">
-                {error && (
-                  <span className="text-red-400 text-sm font-medium">
-                    {error}
-                  </span>
-                )}
-              </div>
-              <button
-                onClick={handleCompareClick}
-                disabled={error !== null || !setupA || !setupB}
-                className="
+
+        {view === "compare" && (
+          <div className="flex gap-10 items-center justify-center mt-10">
+            <button
+              onClick={handleResetClick}
+              className="
+                px-4 py-2 rounded-md
+                bg-orange-600 text-white font-medium
+                hover:bg-orange-700 active:bg-orange-800
+                transition
+              "
+            >
+              Reset
+            </button>
+            <button
+              onClick={handleShowClick}
+              className="
+                px-4 py-2 rounded-md
+                bg-green-600 text-white font-medium
+                hover:bg-green-700 active:bg-green-800
+                transition
+              "
+            >
+              Show All
+            </button>
+            <button
+              onClick={handleSwapClick}
+              className="
+                px-4 py-2 rounded-md
+                bg-blue-600 text-white font-medium
+                hover:bg-blue-700 active:bg-blue-800
+                transition
+              "
+            >
+              Swap
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/*CONTENT*/}
+      <div className="flex-1 overflow-y-auto flex flex-col gap-10 items-center">
+        {view === "upload" ? (
+          <>
+            <div className="surface border border-theme rounded-lg p-6 flex gap-8 justify-center">
+              <FileDropzone
+                label="Setup A"
+                file={setupA?.file ?? null}
+                onFileSelected={handleSetupASelected}
+                onRemove={() => setSetupA(null)}
+              />
+              <FileDropzone
+                label="Setup B"
+                file={setupB?.file ?? null}
+                onFileSelected={handleSetupBSelected}
+                onRemove={() => setSetupB(null)}
+              />
+            </div>
+            <div className="h-6 flex items-center justify-center">
+              {error && (
+                <span className="text-red-400 text-sm font-medium">
+                  {error}
+                </span>
+              )}
+            </div>
+            <button
+              onClick={handleCompareClick}
+              disabled={error !== null || !setupA || !setupB}
+              className="
                   px-6 py-3
                   rounded-lg
                   bg-accent
@@ -120,51 +162,17 @@ function App() {
                   disabled:cursor-not-allowed
                   disabled:scale-100
                 "
-              >
-                Compare
-              </button>
-            </>
-          ) : (
-            <>
-              <div className="flex gap-10 items-center">
-                <button
-                  onClick={handleResetClick}
-                  className="
-                px-4 py-2 rounded-md
-                bg-orange-600 text-white font-medium
-                hover:bg-orange-700 active:bg-orange-800
-                transition
-              "
-                >
-                  Reset
-                </button>
-                <button
-                  onClick={handleShowClick}
-                  className="
-                px-4 py-2 rounded-md
-                bg-green-600 text-white font-medium
-                hover:bg-green-700 active:bg-green-800
-                transition
-              "
-                >
-                  Show All
-                </button>
-                <button
-                  onClick={handleSwapClick}
-                  className="
-                px-4 py-2 rounded-md
-                bg-blue-600 text-white font-medium
-                hover:bg-blue-700 active:bg-blue-800
-                transition
-              "
-                >
-                  Swap
-                </button>
-              </div>
-              <CompareView setupA={setupA!.setup} setupB={setupB!.setup} showAll={showAll} />
-            </>
-          )}
-        </div>
+            >
+              Compare
+            </button>
+          </>
+        ) : (
+          <CompareView
+            setupA={setupA!.setup}
+            setupB={setupB!.setup}
+            showAll={showAll}
+          />
+        )}
       </div>
     </div>
   );
